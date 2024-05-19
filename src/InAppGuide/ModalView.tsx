@@ -13,6 +13,7 @@ import {
 import type { StyleProp, TextStyle } from 'react-native';
 import { normalizeFont } from '../fontsHelper';
 import Carousel from 'react-native-reanimated-carousel';
+import type { ICarouselInstance } from 'react-native-reanimated-carousel';
 import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
 import Button from '../components/Button';
 
@@ -26,7 +27,7 @@ const ModalView = ({
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const insets = useSafeAreaInsets();
-  const carouselRef = useRef();
+  const carouselRef = useRef<ICarouselInstance | null>(null);
   const width = Dimensions.get('window').width;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
