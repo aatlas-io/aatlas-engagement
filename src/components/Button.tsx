@@ -1,5 +1,7 @@
 import React from 'react';
+import type { ReactNode } from 'react';
 import { Pressable } from 'react-native';
+import type { StyleProp, ViewStyle, GestureResponderEvent } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -9,7 +11,14 @@ import Animated, {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-const Button = ({ containerStyle, onPress, children }) => {
+// Define the props interface
+interface ButtonProps {
+  containerStyle?: StyleProp<ViewStyle>;
+  onPress: (event: GestureResponderEvent) => void;
+  children: ReactNode;
+}
+
+const Button = ({ containerStyle, onPress, children }: ButtonProps) => {
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
 

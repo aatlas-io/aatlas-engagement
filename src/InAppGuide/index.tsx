@@ -1,8 +1,13 @@
 import React from 'react';
-import { useConfigService } from '../useService';
+import { useConfigService } from '../configService';
 import ModalView from './ModalView';
 
-const InAppGuide = (props) => {
+type InAppGuideProps = {
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const InAppGuide = (props: InAppGuideProps) => {
   const { appConfig } = useConfigService();
 
   if (!appConfig?.inAppGuide?.in_app_guides?.length) {
@@ -11,5 +16,3 @@ const InAppGuide = (props) => {
 
   return <ModalView appConfig={appConfig} {...props} />;
 };
-
-export default InAppGuide;

@@ -10,12 +10,21 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
+import type { StyleProp, TextStyle } from 'react-native';
 import { normalizeFont } from '../fontsHelper';
 import Carousel from 'react-native-reanimated-carousel';
 import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
 import Button from '../components/Button';
 
-const ModalView = ({ appConfig, visible, setVisible }) => {
+const ModalView = ({
+  appConfig,
+  visible,
+  setVisible,
+}: {
+  appConfig: AppConfigType;
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const insets = useSafeAreaInsets();
   const carouselRef = useRef();
   const width = Dimensions.get('window').width;
@@ -34,7 +43,19 @@ const ModalView = ({ appConfig, visible, setVisible }) => {
     },
   } = appConfig;
 
-  const renderItem = ({ item: { title, image, description } }) => (
+  const headerStyle: StyleProp<TextStyle> = {
+    ...styles.headerText,
+    ...(title_color ? { color: title_color } : {}),
+  };
+
+  const descriptionStyle: StyleProp<TextStyle> = {
+    ...styles.description,
+    ...(description_color ? { color: description_color } : {}),
+  };
+
+  const renderItem = ({
+    item: { title, image, description },
+  }: RenderItemType) => (
     <View
       style={[
         styles.centeredView,
@@ -47,7 +68,7 @@ const ModalView = ({ appConfig, visible, setVisible }) => {
       ]}
     >
       <View style={styles.header}>
-        <Text style={[styles.headerText, { color: title_color }]}>{title}</Text>
+        <Text style={headerStyle}>{title}</Text>
       </View>
       <View style={{ height: 12 }} />
       <Image
@@ -57,9 +78,7 @@ const ModalView = ({ appConfig, visible, setVisible }) => {
       />
       <View style={{ height: 12 }} />
       <ScrollView>
-        <Text style={[styles.description, { color: description_color }]}>
-          {description}
-        </Text>
+        <Text style={descriptionStyle}>{description}</Text>
       </ScrollView>
       <View style={{ height: 12 }} />
     </View>
@@ -74,7 +93,7 @@ const ModalView = ({ appConfig, visible, setVisible }) => {
             paddingBottom: insets.bottom || 12,
             ...(background_color
               ? { backgroundColor: background_color }
-              : 'undefined'),
+              : undefined),
           },
         ]}
       >
@@ -100,13 +119,13 @@ const ModalView = ({ appConfig, visible, setVisible }) => {
             maxIndicators={6}
             interpolateOpacityAndColor={true}
             activeIndicatorConfig={{
-              color: pagination_active_color,
+              color: pagination_active_color || 'black',
               margin: 3,
               opacity: 1,
               size: 8,
             }}
             inactiveIndicatorConfig={{
-              color: pagination_inactive_color,
+              color: pagination_inactive_color || 'black',
               margin: 3,
               opacity: 0.5,
               size: 8,

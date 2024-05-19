@@ -7,10 +7,14 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
+import type { ReactNode } from 'react';
 import { AppState, Alert } from 'react-native';
 import isEqual from 'lodash.isequal';
 
-const ConfigServiceContext = createContext();
+const ConfigServiceContext = createContext<ConfigType>({
+  appConfig: null,
+});
+
 ConfigServiceContext.displayName = 'useConfigServiceContext';
 
 export const useConfigService = () => {
@@ -23,8 +27,16 @@ export const useConfigService = () => {
   return context;
 };
 
-export const ConfigProvider = ({ appEnvId, appSecret, children }) => {
-  const [appConfig, setAppConfig] = useState();
+export const ConfigProvider = ({
+  appEnvId,
+  appSecret,
+  children,
+}: {
+  appEnvId: number;
+  appSecret: string;
+  children: ReactNode;
+}) => {
+  const [appConfig, setAppConfig] = useState<AppConfigType | null>(null);
   const appState = useRef(AppState.currentState);
 
   const getAppConfig = useCallback(async () => {
@@ -41,7 +53,7 @@ export const ConfigProvider = ({ appEnvId, appSecret, children }) => {
           },
           body: JSON.stringify({ app_env_id: appEnvId }),
         });
-        const json = await response.json();
+        const json: AppConfigType = await response.json();
         if (!isEqual(json, appConfig)) {
           setAppConfig(json);
         }
