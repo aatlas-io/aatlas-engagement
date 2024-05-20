@@ -1,7 +1,7 @@
 {
   "name": "@aatlas/engagement",
   "version": "0.0.3",
-  "description": "Increase feature awareness and drive success with our robust nudging platform. Aatlas is a robust platform that can help you increase engagement for that new feature you just launched",
+  "description": "Enhance feature awareness and drive success with our advanced nudging platform. Aatlas is a powerful tool designed to boost engagement for your newly launched feature.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
