@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { View, Button, StatusBar } from 'react-native';
-import { ConfigProvider, InAppGuide } from '@aatlas/engagement';
+import InAppGuide, { ConfigProvider } from '@aatlas/engagement';
 
 export default function Index() {
   const [visible, setVisible] = useState<boolean>(false);

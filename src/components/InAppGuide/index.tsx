@@ -14,9 +14,9 @@ import type { StyleProp, TextStyle } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import type { ICarouselInstance } from 'react-native-reanimated-carousel';
 import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
-import { useConfigService } from '../configService';
-import Button from '../components/Button';
-import { normalizeFont } from '../fontsHelper';
+import { useConfigService } from '../../context';
+import Button from '../Button';
+import { normalizeFont } from '../../fontsHelper';
 
 const InAppGuide = ({
   visible,

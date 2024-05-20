@@ -11,7 +11,6 @@ import Animated, {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-// Define the props interface
 interface ButtonProps {
   containerStyle?: StyleProp<ViewStyle>;
   onPress: (event: GestureResponderEvent) => void;

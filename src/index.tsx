@@ -1,2 +1,3 @@
-export { InAppGuide } from './InAppGuide';
-export { ConfigProvider } from './configService';
+import InAppGuide from './components/InAppGuide';
+export default InAppGuide;
+export { ConfigProvider } from './context';
