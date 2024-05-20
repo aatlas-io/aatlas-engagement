@@ -1,6 +1,6 @@
 {
   "name": "@aatlas/engagement",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Increase feature awareness and drive success with our robust nudging platform. Aatlas is a robust platform that can help you increase engagement for that new feature you just launched",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
