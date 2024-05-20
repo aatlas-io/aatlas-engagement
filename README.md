@@ -63,6 +63,22 @@ const App = () => {
 }
 ```
 
+## Try expo example app
+
+```
+cd example
+yarn
+```
+
+```js
+// Update /app/index.tsx and set the appEnvId and appSecret from your Aatlas dashboard
+<ConfigProvider appEnvId={0} appSecret="xxxx">
+```
+
+```
+yarn start
+```
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
