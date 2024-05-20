@@ -1,5 +1,7 @@
 # @aatlas/engagement
 
+![Build status](https://github.com/aatlas-io/aatlas-engagement/actions/workflows/ci.yml/badge.svg)
+
 Enhance feature awareness and drive success with our advanced nudging platform. Aatlas is a powerful tool designed to boost engagement for your newly launched feature.
 
 ## Installation
