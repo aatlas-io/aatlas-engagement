@@ -14,9 +14,7 @@ or
 yarn add @aatlas/engagement
 ```
 
-<br/>
-
-##### Required dependencies
+## Required dependencies
 
 Bare React Native
 
@@ -37,7 +35,7 @@ import InAppGuide, { ConfigProvider } from '@aatlas/engagement';
 
 // ...
 
-export default function Index() {
+const App = () => {
   /**
    * Control when you want to show the inAppGuide
    */
