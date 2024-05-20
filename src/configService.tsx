@@ -46,13 +46,16 @@ export const ConfigProvider = ({
       ]);
     } else {
       try {
-        const response = await fetch('https://aatlas.io/api/engagement', {
-          method: 'POST',
-          headers: {
-            'x-app-secret': appSecret,
-          },
-          body: JSON.stringify({ app_env_id: appEnvId }),
-        });
+        const response = await fetch(
+          'https://fbc3-2600-1700-8d70-14b0-e148-3f3d-889b-b633.ngrok-free.app/api/engagement',
+          {
+            method: 'POST',
+            headers: {
+              'x-app-secret': appSecret,
+            },
+            body: JSON.stringify({ app_env_id: appEnvId }),
+          }
+        );
         const json: AppConfigType = await response.json();
         if (!isEqual(json, appConfig)) {
           setAppConfig(json);
