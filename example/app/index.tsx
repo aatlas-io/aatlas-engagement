@@ -6,7 +6,7 @@ import InAppGuide, { ConfigProvider } from '@aatlas/engagement';
 export default function Index() {
   const [visible, setVisible] = useState<boolean>(false);
   return (
-    <ConfigProvider appEnvId={0} appSecret="">
+    <ConfigProvider appId={0} appSecret="">
       <StatusBar barStyle={'dark-content'} />
       <View
         style={{
