@@ -56,7 +56,7 @@ export const ConfigProvider = ({
           headers: {
             'x-app-secret': appSecret,
           },
-          body: JSON.stringify({ app_id: appId }),
+          body: JSON.stringify({ id: appId }),
         });
         const json: AppConfigType = await response.json();
         if (!isEqual(json, appConfig)) {
