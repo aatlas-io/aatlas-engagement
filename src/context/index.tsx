@@ -10,6 +10,10 @@ import React, {
 import type { ReactNode } from 'react';
 import { AppState, Alert } from 'react-native';
 import isEqual from 'lodash.isequal';
+import { ENGAGEMENT_API } from '../constants';
+import { globalData } from '../helpers';
+
+const { setGlobalData } = globalData();
 
 const ConfigServiceContext = createContext<ConfigType>({
   appConfig: null,
@@ -28,30 +32,31 @@ export const useConfigService = () => {
 };
 
 export const ConfigProvider = ({
-  appEnvId,
+  appId,
   appSecret,
   children,
 }: {
-  appEnvId: number;
+  appId: number;
   appSecret: string;
   children: ReactNode;
 }) => {
   const [appConfig, setAppConfig] = useState<AppConfigType | null>(null);
   const appState = useRef(AppState.currentState);
+  setGlobalData({ appId, appSecret });
 
   const getAppConfig = useCallback(async () => {
-    if (!appEnvId || !appSecret) {
+    if (!appId || !appSecret) {
       Alert.alert('Error', 'Invalid appEnvId or appSecret', [
         { text: 'OK', onPress: () => {} },
       ]);
     } else {
       try {
-        const response = await fetch('https://aatlas.io/api/engagement', {
+        const response = await fetch(ENGAGEMENT_API, {
           method: 'POST',
           headers: {
             'x-app-secret': appSecret,
           },
-          body: JSON.stringify({ app_env_id: appEnvId }),
+          body: JSON.stringify({ app_id: appId }),
         });
         const json: AppConfigType = await response.json();
         if (!isEqual(json, appConfig)) {
@@ -61,7 +66,7 @@ export const ConfigProvider = ({
         console.error('Failed to fetch engagement config: ', error);
       }
     }
-  }, [appConfig, appSecret, appEnvId]);
+  }, [appConfig, appSecret, appId]);
 
   useEffect(() => {
     if (!appConfig) {

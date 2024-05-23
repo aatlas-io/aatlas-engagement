@@ -35,3 +35,13 @@ type RenderItemType = {
     description: string;
   };
 };
+
+type GlobalDataType = {
+  appId: number;
+  appSecret: string;
+};
+
+type GlobalDataReturnType = {
+  getGlobalData: () => GlobalDataType;
+  setGlobalData: (data: GlobalDataType) => void;
+};
