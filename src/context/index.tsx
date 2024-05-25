@@ -15,23 +15,23 @@ import { globalData } from '../helpers';
 
 const { setGlobalData } = globalData();
 
-const ConfigServiceContext = createContext<ConfigType>({
+const AatlasServiceContext = createContext<ConfigType>({
   appConfig: null,
 });
 
-ConfigServiceContext.displayName = 'useConfigServiceContext';
+AatlasServiceContext.displayName = 'useAatlasServiceContext';
 
-export const useConfigService = () => {
-  const context = useContext(ConfigServiceContext);
+export const useAatlasService = () => {
+  const context = useContext(AatlasServiceContext);
 
   if (!context) {
-    throw new Error('Children should be wrapped inside ConfigProvider');
+    throw new Error('Children should be wrapped inside AatlasProvider');
   }
 
   return context;
 };
 
-export const ConfigProvider = ({
+export const AatlasProvider = ({
   appId,
   appSecret,
   children,
@@ -94,8 +94,8 @@ export const ConfigProvider = ({
   const values = useMemo(() => ({ appConfig }), [appConfig]);
 
   return (
-    <ConfigServiceContext.Provider value={values}>
+    <AatlasServiceContext.Provider value={values}>
       {children}
-    </ConfigServiceContext.Provider>
+    </AatlasServiceContext.Provider>
   );
 };

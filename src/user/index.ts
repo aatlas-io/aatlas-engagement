@@ -2,18 +2,18 @@ import { SET_USER_API } from '../constants';
 import { globalData } from '../helpers';
 
 export const setUser = async ({
-  id,
+  user_id,
   name = '',
   email = '',
 }: {
-  id: any;
+  user_id: string;
   name?: string;
   email?: string;
 }) => {
   const { getGlobalData } = globalData();
 
-  if (!id) {
-    console.error('Id is required for setUser');
+  if (!user_id) {
+    console.error('user_id is required for Aatlas setUser');
   } else if (!getGlobalData()?.appSecret) {
     console.error(
       '@aatlas/engagement app is not initialized. Please follow the documentation'
@@ -25,10 +25,10 @@ export const setUser = async ({
         headers: {
           'x-app-secret': getGlobalData()?.appSecret,
         },
-        body: JSON.stringify({ id, name, email }),
+        body: JSON.stringify({ user_id, name, email }),
       });
     } catch (error) {
-      console.error('setUser failed: ', error);
+      console.error('Aatlas setUser failed: ', error);
     }
   }
 

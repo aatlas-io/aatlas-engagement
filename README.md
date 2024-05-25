@@ -33,7 +33,7 @@ Expo
 ## Usage
 
 ```js
-import InAppGuide, { ConfigProvider } from '@aatlas/engagement';
+import InAppGuide, { AatlasProvider } from '@aatlas/engagement';
 
 // ...
 
@@ -46,7 +46,7 @@ const App = () => {
     /**
      * Copy the 'appEnvId' and 'appSecret' from your Aatlas dashboard
      */
-    <ConfigProvider appEnvId={<number>} appSecret="<string>">
+    <AatlasProvider appEnvId={<number>} appSecret="<string>">
       <View
         style={{
           flex: 1,
@@ -60,7 +60,7 @@ const App = () => {
          */
         <InAppGuide visible={visible} setVisible={setVisible} />
       </View>
-    </ConfigProvider>
+    </AatlasProvider>
   );
 }
 ```
@@ -74,7 +74,7 @@ yarn
 
 ```js
 // Update /app/index.tsx and set the appEnvId and appSecret from your Aatlas dashboard
-<ConfigProvider appEnvId={0} appSecret="xxxx">
+<AatlasProvider appEnvId={0} appSecret="xxxx">
 ```
 
 ```
