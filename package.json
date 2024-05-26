@@ -32,8 +32,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "release": "release-it",
-    "postinstall": "yarn add @react-native-async-storage/async-storage react-native-device-info"
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
@@ -82,8 +81,10 @@
     "@types/react": "^18.2.44"
   },
   "peerDependencies": {
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "react": "*",
     "react-native": "*",
+    "react-native-device-info": "^11.1.0",
     "react-native-gesture-handler": "*",
     "react-native-reanimated": "*",
     "react-native-safe-area-context": "*"
@@ -166,8 +167,6 @@
     ]
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.23.1",
-    "react-native-device-info": "^11.1.0",
     "lodash.isequal": "^4.5.0",
     "react-native-animated-dots-carousel": "^1.0.2",
     "react-native-reanimated-carousel": "^3.5.1",
