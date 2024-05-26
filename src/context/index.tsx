@@ -9,11 +9,12 @@ import React, {
 } from 'react';
 import type { ReactNode } from 'react';
 import { AppState, Alert } from 'react-native';
+import { getVersion } from 'react-native-device-info';
 import isEqual from 'lodash.isequal';
 import { ENGAGEMENT_API } from '../constants';
 import { globalData } from '../helpers';
 
-const { setGlobalData } = globalData();
+const { setAppData, getAnonymousUserId } = globalData();
 
 const AatlasServiceContext = createContext<ConfigType>({
   appConfig: null,
@@ -42,7 +43,7 @@ export const AatlasProvider = ({
 }) => {
   const [appConfig, setAppConfig] = useState<AppConfigType | null>(null);
   const appState = useRef(AppState.currentState);
-  setGlobalData({ appId, appSecret });
+  setAppData({ appId, appSecret });
 
   const getAppConfig = useCallback(async () => {
     if (!appId || !appSecret) {
@@ -51,12 +52,17 @@ export const AatlasProvider = ({
       ]);
     } else {
       try {
+        const anonymous_user_id = await getAnonymousUserId();
         const response = await fetch(ENGAGEMENT_API, {
           method: 'POST',
           headers: {
             'x-app-secret': appSecret,
           },
-          body: JSON.stringify({ id: appId }),
+          body: JSON.stringify({
+            app_id: appId,
+            app_version: getVersion(),
+            anonymous_user_id,
+          }),
         });
         const json: AppConfigType = await response.json();
         if (!isEqual(json, appConfig)) {

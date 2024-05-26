@@ -39,9 +39,16 @@ type RenderItemType = {
 type GlobalDataType = {
   appId: number;
   appSecret: string;
+  anonymousUserId: string;
+};
+
+type AppDataType = {
+  appId: number;
+  appSecret: string;
 };
 
 type GlobalDataReturnType = {
   getGlobalData: () => GlobalDataType;
-  setGlobalData: (data: GlobalDataType) => void;
+  setAppData: (data: AppDataType) => void;
+  getAnonymousUserId: () => Promise<string>;
 };
