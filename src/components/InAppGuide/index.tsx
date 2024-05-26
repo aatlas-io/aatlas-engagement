@@ -18,6 +18,14 @@ import { useAatlasService } from '../../context';
 import Button from '../Button';
 import { normalizeFont } from '../../fontsHelper';
 
+const background_color = '';
+const title_color = '';
+const description_color = '';
+const button_background_color = '';
+const button_text_color = '';
+const pagination_active_color = '';
+const pagination_inactive_color = '';
+
 const InAppGuide = ({
   visible,
   setVisible,
@@ -31,22 +39,11 @@ const InAppGuide = ({
   const width = Dimensions.get('window').width;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  if (!appConfig?.inAppGuide?.in_app_guides?.length) {
+  if (!appConfig?.in_app_guides?.length) {
     return null;
   }
 
-  const {
-    inAppGuide: {
-      in_app_guides,
-      background_color,
-      title_color,
-      description_color,
-      button_background_color,
-      button_text_color,
-      pagination_active_color,
-      pagination_inactive_color,
-    },
-  } = appConfig;
+  const { in_app_guides } = appConfig;
 
   const headerStyle: StyleProp<TextStyle> = {
     ...styles.headerText,
