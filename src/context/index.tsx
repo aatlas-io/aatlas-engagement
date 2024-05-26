@@ -64,7 +64,13 @@ export const AatlasProvider = ({
             anonymous_user_id,
           }),
         });
+
         const json: AppConfigType = await response.json();
+
+        if (!response.ok) {
+          throw new Error(JSON.stringify(json));
+        }
+
         if (!isEqual(json, appConfig)) {
           setAppConfig(json);
         }

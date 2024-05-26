@@ -25,7 +25,7 @@ export const setUser = async ({
       throw new Error('Organization user does not exist');
     }
 
-    await fetch(SET_USER_API, {
+    const response = await fetch(SET_USER_API, {
       method: 'POST',
       headers: {
         'x-app-secret': appSecret,
@@ -39,6 +39,11 @@ export const setUser = async ({
         app_version: getVersion(),
       }),
     });
+
+    if (!response.ok) {
+      const json = await response.json();
+      throw new Error(JSON.stringify(json));
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.error('Aatlas setUser failed: ', error.message);
