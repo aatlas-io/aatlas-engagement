@@ -1,5 +1,4 @@
-const BASE_API =
-  'https://9682-2600-1700-8d70-14b0-d0d7-8939-4d00-3b18.ngrok-free.app/api';
+const BASE_API = 'https://app.aatlas.io/api';
 
 export const ENGAGEMENT_API = `${BASE_API}/engagement`;
 export const SET_USER_API = `${BASE_API}/engagement/user`;
