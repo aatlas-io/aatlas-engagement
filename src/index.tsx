@@ -1,3 +1,3 @@
 import InAppGuide from './components/InAppGuide';
 export default InAppGuide;
-export { AatlasProvider } from './context';
+export { AatlasProvider, useAatlasService } from './context';
