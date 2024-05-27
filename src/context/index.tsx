@@ -23,8 +23,14 @@ import {
 
 const AatlasServiceContext = createContext<ConfigType>({
   appConfig: null,
-  setUser: async ({ user_id, name, email }) => null,
-  updateInAppGuidesSeenStatus: async ({ seenIds }) => null,
+  setUser: async ({ user_id, name, email }) => {
+    console.log({ user_id, name, email });
+    return null;
+  },
+  updateInAppGuidesSeenStatus: async ({ seenIds }) => {
+    console.log({ seenIds });
+    return null;
+  },
 });
 
 AatlasServiceContext.displayName = 'useAatlasServiceContext';
