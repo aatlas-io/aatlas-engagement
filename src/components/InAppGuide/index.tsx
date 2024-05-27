@@ -34,17 +34,31 @@ const InAppGuide = ({
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { appConfig } = useAatlasService();
+  const { appConfig, updateInAppGuidesSeenStatus } = useAatlasService();
   const insets = useSafeAreaInsets();
   const carouselRef = useRef<ICarouselInstance | null>(null);
   const width = Dimensions.get('window').width;
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const seenIdsRef = useRef<number[]>([]);
 
   if (!appConfig?.in_app_guides?.length) {
     return null;
   }
 
   const { in_app_guides } = appConfig;
+
+  const updateSeenIds = (index: number) => {
+    const id = in_app_guides?.[index]?.id;
+    if (id) {
+      seenIdsRef.current = Array.from(new Set([...seenIdsRef.current, id]));
+    }
+  };
+
+  const updateSelectedIndex = (index: number) => {
+    updateSeenIds(index);
+    setSelectedIndex(index);
+  };
+  updateSeenIds(0);
 
   const headerStyle: StyleProp<TextStyle> = {
     ...styles.headerText,
@@ -70,10 +84,19 @@ const InAppGuide = ({
         },
       ]}
     >
-      <View style={styles.headerCloseContainer}>
+      <View
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+        }}
+      >
         <Button
           onPress={() => {
-            setSelectedIndex(0);
+            updateSelectedIndex(0);
+            updateInAppGuidesSeenStatus({ seenIds: seenIdsRef.current });
             setVisible(!visible);
           }}
         >
@@ -122,7 +145,7 @@ const InAppGuide = ({
           loop={false}
           width={width}
           data={in_app_guides}
-          onSnapToItem={setSelectedIndex}
+          onSnapToItem={updateSelectedIndex}
           renderItem={renderItem}
         />
         <View
@@ -173,7 +196,8 @@ const InAppGuide = ({
             ]}
             onPress={() => {
               if (selectedIndex === in_app_guides.length - 1) {
-                setSelectedIndex(0);
+                updateSelectedIndex(0);
+                updateInAppGuidesSeenStatus({ seenIds: seenIdsRef.current });
                 setVisible(!visible);
               } else {
                 carouselRef?.current?.next?.();
@@ -196,13 +220,6 @@ const InAppGuide = ({
 };
 
 const styles = StyleSheet.create({
-  headerCloseContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
   centeredView: {
     flex: 1,
     alignItems: 'center',
@@ -224,6 +241,7 @@ const styles = StyleSheet.create({
     fontSize: normalizeFont(16),
     fontFamily: 'Avenir',
     flexWrap: 'wrap',
+    textAlign: 'left',
   },
   buttonsContainer: {
     width: '100%',

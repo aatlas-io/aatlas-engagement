@@ -11,6 +11,20 @@ type AppConfigType = {
 
 type ConfigType = {
   appConfig: AppConfigType | null;
+  setUser: ({
+    user_id,
+    name,
+    email,
+  }: {
+    user_id?: string;
+    name?: string;
+    email?: string;
+  }) => Promise<null>;
+  updateInAppGuidesSeenStatus: ({
+    seenIds,
+  }: {
+    seenIds: number[];
+  }) => Promise<null>;
 };
 
 type RenderItemType = {

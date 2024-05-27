@@ -1,4 +1,4 @@
-# @aatlas/engagement
+<!-- # @aatlas/engagement
 
 ![Build status](https://github.com/aatlas-io/aatlas-engagement/actions/workflows/ci.yml/badge.svg)
 
@@ -79,9 +79,11 @@ yarn
 
 ```
 yarn start
-```
+``` -->
 
-## Contributing
+## Coming soon
+
+<!-- ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
@@ -91,4 +93,4 @@ MIT
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob) -->

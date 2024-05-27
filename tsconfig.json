@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@aatlas/engagement": ["./src/index"]
+      "@aatlas/engagement": ["src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
