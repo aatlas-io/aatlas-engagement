@@ -37,3 +37,5 @@ type GlobalDataReturnType = {
   setAppData: (data: AppDataType) => void;
   getAnonymousUserId: () => Promise<string>;
 };
+
+declare module '*.jpg';

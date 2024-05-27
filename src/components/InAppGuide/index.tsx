@@ -17,6 +17,7 @@ import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
 import { useAatlasService } from '../../context';
 import Button from '../Button';
 import { normalizeFont } from '../../fontsHelper';
+import CloseIcon from './close.jpg';
 
 const background_color = '';
 const title_color = '';
@@ -69,6 +70,20 @@ const InAppGuide = ({
         },
       ]}
     >
+      <View style={styles.headerCloseContainer}>
+        <Button
+          onPress={() => {
+            setSelectedIndex(0);
+            setVisible(!visible);
+          }}
+        >
+          <Image
+            style={{ width: 28, height: 28 }}
+            source={CloseIcon}
+            resizeMode="cover"
+          />
+        </Button>
+      </View>
       <View style={styles.header}>
         <Text style={headerStyle}>{title}</Text>
       </View>
@@ -79,7 +94,10 @@ const InAppGuide = ({
         resizeMode="cover"
       />
       <View style={{ height: 12 }} />
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={{ width: width - 40 }}
+        showsHorizontalScrollIndicator={false}
+      >
         <Text style={descriptionStyle}>{description}</Text>
       </ScrollView>
       <View style={{ height: 12 }} />
@@ -178,6 +196,13 @@ const InAppGuide = ({
 };
 
 const styles = StyleSheet.create({
+  headerCloseContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   centeredView: {
     flex: 1,
     alignItems: 'center',
