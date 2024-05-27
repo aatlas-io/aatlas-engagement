@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   useContext,
   createContext,
@@ -25,7 +24,6 @@ const AatlasServiceContext = createContext<ConfigType>({
   appConfig: null,
   setUser: async ({ user_id, name, email }) => {
     console.log({ user_id, name, email });
-    return null;
   },
   updateInAppGuidesSeenStatus: async ({ seenIds }) => {
     console.log({ seenIds });
@@ -56,6 +54,12 @@ export const AatlasProvider = ({
 }) => {
   const [appConfig, setAppConfig] = useState<AppConfigType | null>(null);
   const appState = useRef(AppState.currentState);
+  const [userDetails, setUserDetails] = useState<{
+    user_id?: string;
+    name?: string;
+    email?: string;
+  }>({ user_id: '', name: '', email: '' });
+
   const globalDataRef = useRef<GlobalDataType>({
     appId: 0,
     appSecret: '',
@@ -63,7 +67,22 @@ export const AatlasProvider = ({
   });
   globalDataRef.current = { ...globalDataRef.current, appId, appSecret };
 
-  const getAnonymousUserId = async (): Promise<string> => {
+  const setUser = useCallback(
+    ({
+      user_id,
+      name,
+      email,
+    }: {
+      user_id?: string;
+      name?: string;
+      email?: string;
+    }) => {
+      setUserDetails({ user_id, name, email });
+    },
+    [setUserDetails]
+  );
+
+  const getAnonymousUserId = useCallback(async (): Promise<string> => {
     let value = await AsyncStorage.getItem(ANONYMOUS_USER_ID_KEY);
     if (!value) {
       value = uuid.v4() as string;
@@ -75,7 +94,61 @@ export const AatlasProvider = ({
     };
 
     return value;
-  };
+  }, []);
+
+  const updateUser = useCallback(
+    async ({
+      user_id = '',
+      name = '',
+      email = '',
+    }: {
+      user_id?: string;
+      name?: string;
+      email?: string;
+    }) => {
+      try {
+        const anonymous_user_id = await getAnonymousUserId();
+        if (!appSecret) {
+          throw new Error(
+            '@aatlas/engagement app is not initialized. Please follow the documentation'
+          );
+        }
+
+        if (!anonymous_user_id) {
+          throw new Error('Organization user does not exist');
+        }
+
+        const response = await fetch(SET_USER_API, {
+          method: 'POST',
+          headers: {
+            'x-app-secret': appSecret,
+          },
+          body: JSON.stringify({
+            app_id: appId,
+            user_id,
+            name,
+            email,
+            anonymous_user_id,
+            app_version: getVersion(),
+          }),
+        });
+
+        if (!response.ok) {
+          const json = await response.json();
+          throw new Error(JSON.stringify(json));
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Aatlas setUser failed: ', error.message);
+        } else {
+          console.error('Aatlas setUser failed: ', error);
+        }
+      }
+
+      return null;
+    },
+    [appSecret, appId, getAnonymousUserId]
+  );
 
   const getAppConfig = useCallback(async () => {
     if (!appId || !appSecret) {
@@ -106,15 +179,26 @@ export const AatlasProvider = ({
         if (!isEqual(json, appConfig)) {
           setAppConfig(json);
         }
+
+        if (userDetails?.user_id || userDetails?.name || userDetails?.email) {
+          updateUser(userDetails);
+        }
       } catch (error) {
         console.error('Failed to fetch engagement config: ', error);
       }
     }
-  }, [appConfig, appSecret, appId]);
+  }, [
+    appConfig,
+    appSecret,
+    appId,
+    getAnonymousUserId,
+    userDetails,
+    updateUser,
+  ]);
 
   const updateInAppGuidesSeenStatus = useCallback(
     async ({ seenIds = [] }: { seenIds?: number[] }) => {
-      const { anonymousUserId } = globalDataRef.current;
+      const anonymous_user_id = await getAnonymousUserId();
       try {
         if (!appId || !appSecret) {
           throw new Error(
@@ -122,7 +206,7 @@ export const AatlasProvider = ({
           );
         }
 
-        if (!anonymousUserId) {
+        if (!anonymous_user_id) {
           throw new Error('Organization user does not exist');
         }
 
@@ -133,7 +217,7 @@ export const AatlasProvider = ({
           },
           body: JSON.stringify({
             app_id: appId,
-            anonymous_user_id: anonymousUserId,
+            anonymous_user_id,
             in_app_guide_ids: seenIds,
           }),
         });
@@ -155,61 +239,7 @@ export const AatlasProvider = ({
 
       return null;
     },
-    [globalDataRef, appSecret, appId]
-  );
-
-  const setUser = useCallback(
-    async ({
-      user_id = '',
-      name = '',
-      email = '',
-    }: {
-      user_id?: string;
-      name?: string;
-      email?: string;
-    }) => {
-      try {
-        const { anonymousUserId } = globalDataRef.current;
-        if (!appSecret) {
-          throw new Error(
-            '@aatlas/engagement app is not initialized. Please follow the documentation'
-          );
-        }
-
-        if (!anonymousUserId) {
-          throw new Error('Organization user does not exist');
-        }
-
-        const response = await fetch(SET_USER_API, {
-          method: 'POST',
-          headers: {
-            'x-app-secret': appSecret,
-          },
-          body: JSON.stringify({
-            app_id: appId,
-            user_id,
-            name,
-            email,
-            anonymous_user_id: anonymousUserId,
-            app_version: getVersion(),
-          }),
-        });
-
-        if (!response.ok) {
-          const json = await response.json();
-          throw new Error(JSON.stringify(json));
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error('Aatlas setUser failed: ', error.message);
-        } else {
-          console.error('Aatlas setUser failed: ', error);
-        }
-      }
-
-      return null;
-    },
-    [globalDataRef, appSecret, appId]
+    [appSecret, appId, getAnonymousUserId]
   );
 
   useEffect(() => {

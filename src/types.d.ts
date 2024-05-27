@@ -19,7 +19,7 @@ type ConfigType = {
     user_id?: string;
     name?: string;
     email?: string;
-  }) => Promise<null>;
+  }) => void;
   updateInAppGuidesSeenStatus: ({
     seenIds,
   }: {
