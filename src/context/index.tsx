@@ -266,8 +266,8 @@ export const AatlasProvider = ({
   }, [getAppConfig]);
 
   const values = useMemo(
-    () => ({ appConfig, updateInAppGuidesSeenStatus, setUser }),
-    [appConfig, updateInAppGuidesSeenStatus, setUser]
+    () => ({ appConfig, updateInAppGuidesSeenStatus, setUser, setAppConfig }),
+    [appConfig, updateInAppGuidesSeenStatus, setUser, setAppConfig]
   );
 
   return (
