@@ -29,6 +29,7 @@ const AatlasServiceContext = createContext<ConfigType>({
     console.log(data);
     return null;
   },
+  setAppConfig: () => {},
 });
 
 AatlasServiceContext.displayName = 'useAatlasServiceContext';
