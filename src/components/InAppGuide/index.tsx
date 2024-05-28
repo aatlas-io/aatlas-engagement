@@ -39,7 +39,7 @@ const InAppGuide = ({
   const carouselRef = useRef<ICarouselInstance | null>(null);
   const width = Dimensions.get('window').width;
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const seenIdsRef = useRef<number[]>([]);
+  const seenIdsRef = useRef<InAppGuidesStatus>({ seen: [], notSeen: [] });
 
   if (!appConfig?.in_app_guides?.length) {
     return null;
@@ -48,9 +48,16 @@ const InAppGuide = ({
   const { in_app_guides } = appConfig;
 
   const updateSeenIds = (index: number) => {
-    const id = in_app_guides?.[index]?.id;
-    if (id) {
-      seenIdsRef.current = Array.from(new Set([...seenIdsRef.current, id]));
+    const selectedId = in_app_guides?.[index]?.id;
+    const allIds = in_app_guides.map((iag) => iag.id);
+    if (selectedId) {
+      if (!seenIdsRef.current.seen.includes(selectedId)) {
+        seenIdsRef.current.seen.push(selectedId);
+      }
+
+      seenIdsRef.current.notSeen = allIds.filter(
+        (id) => !seenIdsRef.current.seen.includes(id)
+      );
     }
   };
 

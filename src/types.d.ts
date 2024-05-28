@@ -53,3 +53,8 @@ type GlobalDataReturnType = {
 };
 
 declare module '*.jpg';
+
+type InAppGuidesStatus = {
+  seen: number[];
+  notSeen: number[];
+};
