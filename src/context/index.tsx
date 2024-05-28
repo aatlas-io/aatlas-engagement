@@ -29,7 +29,7 @@ const AatlasServiceContext = createContext<ConfigType>({
     console.log(data);
     return null;
   },
-  setAppConfig: () => {},
+  resetInAppGuides: () => {},
 });
 
 AatlasServiceContext.displayName = 'useAatlasServiceContext';
@@ -67,6 +67,10 @@ export const AatlasProvider = ({
     anonymousUserId: '',
   });
   globalDataRef.current = { ...globalDataRef.current, appId, appSecret };
+
+  const resetInAppGuides = useCallback(() => {
+    setAppConfig({ in_app_guides: [] });
+  }, []);
 
   const setUser = useCallback(
     ({
@@ -267,8 +271,13 @@ export const AatlasProvider = ({
   }, [getAppConfig]);
 
   const values = useMemo(
-    () => ({ appConfig, updateInAppGuidesSeenStatus, setUser, setAppConfig }),
-    [appConfig, updateInAppGuidesSeenStatus, setUser, setAppConfig]
+    () => ({
+      appConfig,
+      updateInAppGuidesSeenStatus,
+      setUser,
+      resetInAppGuides,
+    }),
+    [appConfig, updateInAppGuidesSeenStatus, setUser, resetInAppGuides]
   );
 
   return (

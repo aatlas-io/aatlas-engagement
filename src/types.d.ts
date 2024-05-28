@@ -26,7 +26,7 @@ type ConfigType = {
     email?: string;
   }) => void;
   updateInAppGuidesSeenStatus: (data: InAppGuidesStatus) => Promise<null>;
-  setAppConfig: any;
+  resetInAppGuides: () => void;
 };
 
 type RenderItemType = {
