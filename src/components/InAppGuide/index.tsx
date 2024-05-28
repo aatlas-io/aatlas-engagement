@@ -34,7 +34,8 @@ const InAppGuide = ({
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { appConfig, updateInAppGuidesSeenStatus } = useAatlasService();
+  const { appConfig, updateInAppGuidesSeenStatus, setAppConfig } =
+    useAatlasService();
   const insets = useSafeAreaInsets();
   const carouselRef = useRef<ICarouselInstance | null>(null);
   const width = Dimensions.get('window').width;
@@ -105,6 +106,7 @@ const InAppGuide = ({
             updateSelectedIndex(0);
             updateInAppGuidesSeenStatus(seenIdsRef.current);
             seenIdsRef.current = { seen: [], notSeen: [] };
+            setAppConfig();
             setVisible(!visible);
           }}
         >
@@ -207,6 +209,7 @@ const InAppGuide = ({
                 updateSelectedIndex(0);
                 updateInAppGuidesSeenStatus(seenIdsRef.current);
                 seenIdsRef.current = { seen: [], notSeen: [] };
+                setAppConfig();
                 setVisible(!visible);
               } else {
                 carouselRef?.current?.next?.();
