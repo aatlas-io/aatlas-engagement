@@ -25,8 +25,8 @@ const AatlasServiceContext = createContext<ConfigType>({
   setUser: async ({ user_id, name, email }) => {
     console.log({ user_id, name, email });
   },
-  updateInAppGuidesSeenStatus: async ({ seenIds }) => {
-    console.log({ seenIds });
+  updateInAppGuidesSeenStatus: async (data) => {
+    console.log(data);
     return null;
   },
 });
@@ -197,7 +197,7 @@ export const AatlasProvider = ({
   ]);
 
   const updateInAppGuidesSeenStatus = useCallback(
-    async ({ seenIds = [] }: { seenIds?: number[] }) => {
+    async (data: InAppGuidesStatus) => {
       const anonymous_user_id = await getAnonymousUserId();
       try {
         if (!appId || !appSecret) {
@@ -218,7 +218,7 @@ export const AatlasProvider = ({
           body: JSON.stringify({
             app_id: appId,
             anonymous_user_id,
-            in_app_guide_ids: seenIds,
+            in_app_guide_ids: data,
           }),
         });
 

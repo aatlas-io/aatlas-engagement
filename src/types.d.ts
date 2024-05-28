@@ -9,6 +9,11 @@ type AppConfigType = {
   in_app_guides: InAppGuideItemType[];
 };
 
+type InAppGuidesStatus = {
+  seen: number[];
+  notSeen: number[];
+};
+
 type ConfigType = {
   appConfig: AppConfigType | null;
   setUser: ({
@@ -20,11 +25,7 @@ type ConfigType = {
     name?: string;
     email?: string;
   }) => void;
-  updateInAppGuidesSeenStatus: ({
-    seenIds,
-  }: {
-    seenIds: number[];
-  }) => Promise<null>;
+  updateInAppGuidesSeenStatus: (data: InAppGuidesStatus) => Promise<null>;
 };
 
 type RenderItemType = {
@@ -53,8 +54,3 @@ type GlobalDataReturnType = {
 };
 
 declare module '*.jpg';
-
-type InAppGuidesStatus = {
-  seen: number[];
-  notSeen: number[];
-};
