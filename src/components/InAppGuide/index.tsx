@@ -104,6 +104,7 @@ const InAppGuide = ({
           onPress={() => {
             updateSelectedIndex(0);
             updateInAppGuidesSeenStatus(seenIdsRef.current);
+            seenIdsRef.current = { seen: [], notSeen: [] };
             setVisible(!visible);
           }}
         >
@@ -205,6 +206,7 @@ const InAppGuide = ({
               if (selectedIndex === in_app_guides.length - 1) {
                 updateSelectedIndex(0);
                 updateInAppGuidesSeenStatus(seenIdsRef.current);
+                seenIdsRef.current = { seen: [], notSeen: [] };
                 setVisible(!visible);
               } else {
                 carouselRef?.current?.next?.();
