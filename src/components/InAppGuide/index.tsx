@@ -9,6 +9,7 @@ import {
   Text,
   ScrollView,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import type { StyleProp, TextStyle } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
@@ -113,111 +114,115 @@ const InAppGuide = ({
 
   return (
     <Modal animationType="slide" transparent visible={visible}>
-      <View
-        style={[
-          styles.centeredView,
-          {
-            paddingBottom: insets?.bottom ? 0 : 12,
-            ...(background_color
-              ? { backgroundColor: background_color }
-              : undefined),
-          },
-        ]}
-      >
-        <View style={styles.closeButtonContainer}>
-          <Button
-            onPress={() => {
-              updateSelectedIndex(0);
-              updateInAppGuidesSeenStatus(seenIdsRef.current);
-              seenIdsRef.current = { seen: [], notSeen: [] };
-              resetInAppGuides();
-              setVisible(!visible);
-            }}
-          >
-            <Image
-              style={{ width: 28, height: 28 }}
-              source={CloseIcon}
-              resizeMode="cover"
-            />
-          </Button>
-        </View>
-        <Carousel
-          ref={carouselRef}
-          loop={false}
-          width={width}
-          data={in_app_guides}
-          onSnapToItem={updateSelectedIndex}
-          renderItem={renderItem}
-        />
+      <SafeAreaView style={{ flex: 1 }}>
         <View
           style={[
-            styles.paginationContainer,
-            background_color
-              ? { backgroundColor: background_color }
-              : undefined,
+            styles.centeredView,
+            {
+              paddingBottom: insets?.bottom ? 0 : 12,
+              ...(background_color
+                ? { backgroundColor: background_color }
+                : undefined),
+            },
           ]}
         >
-          <AnimatedDotsCarousel
-            length={in_app_guides.length}
-            currentIndex={selectedIndex}
-            maxIndicators={6}
-            interpolateOpacityAndColor={true}
-            activeIndicatorConfig={{
-              color: pagination_active_color || 'black',
-              margin: 3,
-              opacity: 1,
-              size: 8,
-            }}
-            inactiveIndicatorConfig={{
-              color: pagination_inactive_color || 'black',
-              margin: 3,
-              opacity: 0.5,
-              size: 8,
-            }}
-            decreasingDots={[
-              {
-                config: { color: 'grey', margin: 3, opacity: 0.5, size: 6 },
-                quantity: 1,
-              },
-              {
-                config: { color: 'grey', margin: 3, opacity: 0.5, size: 4 },
-                quantity: 1,
-              },
-            ]}
-          />
-        </View>
-        <View style={{ height: 8 }} />
-        <View style={styles.buttonsContainer}>
-          <Button
-            containerStyle={[
-              styles.button,
-              button_background_color
-                ? { backgroundColor: button_background_color }
-                : undefined,
-            ]}
-            onPress={() => {
-              if (selectedIndex === in_app_guides.length - 1) {
+          <View style={styles.closeButtonContainer}>
+            <Button
+              onPress={() => {
                 updateSelectedIndex(0);
                 updateInAppGuidesSeenStatus(seenIdsRef.current);
                 seenIdsRef.current = { seen: [], notSeen: [] };
                 resetInAppGuides();
                 setVisible(!visible);
-              } else {
-                carouselRef?.current?.next?.();
-              }
-            }}
-          >
-            <Text
-              style={[
-                styles.buttonText,
-                button_text_color ? { color: button_text_color } : undefined,
-              ]}
+              }}
             >
-              {selectedIndex === in_app_guides.length - 1 ? 'Done' : 'Continue'}
-            </Text>
-          </Button>
+              <Image
+                style={{ width: 28, height: 28 }}
+                source={CloseIcon}
+                resizeMode="cover"
+              />
+            </Button>
+          </View>
+          <Carousel
+            ref={carouselRef}
+            loop={false}
+            width={width}
+            data={in_app_guides}
+            onSnapToItem={updateSelectedIndex}
+            renderItem={renderItem}
+          />
+          <View
+            style={[
+              styles.paginationContainer,
+              background_color
+                ? { backgroundColor: background_color }
+                : undefined,
+            ]}
+          >
+            <AnimatedDotsCarousel
+              length={in_app_guides.length}
+              currentIndex={selectedIndex}
+              maxIndicators={6}
+              interpolateOpacityAndColor={true}
+              activeIndicatorConfig={{
+                color: pagination_active_color || 'black',
+                margin: 3,
+                opacity: 1,
+                size: 8,
+              }}
+              inactiveIndicatorConfig={{
+                color: pagination_inactive_color || 'black',
+                margin: 3,
+                opacity: 0.5,
+                size: 8,
+              }}
+              decreasingDots={[
+                {
+                  config: { color: 'grey', margin: 3, opacity: 0.5, size: 6 },
+                  quantity: 1,
+                },
+                {
+                  config: { color: 'grey', margin: 3, opacity: 0.5, size: 4 },
+                  quantity: 1,
+                },
+              ]}
+            />
+          </View>
+          <View style={{ height: 8 }} />
+          <View style={styles.buttonsContainer}>
+            <Button
+              containerStyle={[
+                styles.button,
+                button_background_color
+                  ? { backgroundColor: button_background_color }
+                  : undefined,
+              ]}
+              onPress={() => {
+                if (selectedIndex === in_app_guides.length - 1) {
+                  updateSelectedIndex(0);
+                  updateInAppGuidesSeenStatus(seenIdsRef.current);
+                  seenIdsRef.current = { seen: [], notSeen: [] };
+                  resetInAppGuides();
+                  setVisible(!visible);
+                } else {
+                  carouselRef?.current?.next?.();
+                }
+              }}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  button_text_color ? { color: button_text_color } : undefined,
+                ]}
+              >
+                {selectedIndex === in_app_guides.length - 1
+                  ? 'Done'
+                  : 'Continue'}
+              </Text>
+            </Button>
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };
