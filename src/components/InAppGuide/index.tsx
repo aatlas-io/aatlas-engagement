@@ -114,7 +114,7 @@ const InAppGuide = ({
 
   return (
     <Modal animationType="slide" transparent visible={visible}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <View
           style={[
             styles.centeredView,
