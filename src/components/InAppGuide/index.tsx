@@ -92,31 +92,6 @@ const InAppGuide = ({
         },
       ]}
     >
-      <View
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        }}
-      >
-        <Button
-          onPress={() => {
-            updateSelectedIndex(0);
-            updateInAppGuidesSeenStatus(seenIdsRef.current);
-            seenIdsRef.current = { seen: [], notSeen: [] };
-            resetInAppGuides();
-            setVisible(!visible);
-          }}
-        >
-          <Image
-            style={{ width: 28, height: 28 }}
-            source={CloseIcon}
-            resizeMode="cover"
-          />
-        </Button>
-      </View>
       <View style={styles.header}>
         <Text style={headerStyle}>{title}</Text>
       </View>
@@ -150,6 +125,23 @@ const InAppGuide = ({
           },
         ]}
       >
+        <View style={styles.closeButtonContainer}>
+          <Button
+            onPress={() => {
+              updateSelectedIndex(0);
+              updateInAppGuidesSeenStatus(seenIdsRef.current);
+              seenIdsRef.current = { seen: [], notSeen: [] };
+              resetInAppGuides();
+              setVisible(!visible);
+            }}
+          >
+            <Image
+              style={{ width: 28, height: 28 }}
+              source={CloseIcon}
+              resizeMode="cover"
+            />
+          </Button>
+        </View>
         <Carousel
           ref={carouselRef}
           loop={false}
@@ -285,6 +277,13 @@ const styles = StyleSheet.create({
     height: 12,
     width: '100%',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButtonContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
 });
