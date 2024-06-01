@@ -17,9 +17,27 @@ yarn add @aatlas/engagement
 ## Usage
 
 ```js
-import InAppGuide, { AatlasProvider } from '@aatlas/engagement';
+import InAppGuide, { AatlasProvider, useAatlasService } from '@aatlas/engagement';
 
 // ...
+
+const UserProfile = () => {
+  const { setUser } = useAatlasService();
+
+  useEffect(() => {
+    setUser({
+      user_id: 'XXXX',
+      name: 'John Doe',
+      email: 'john.doe@test.com',
+    });
+  }, [setUser]);
+
+  return (
+    <View>
+      <Text>Set user</Text>
+    </View>
+  );
+};
 
 const App = () => {
   /**
@@ -39,8 +57,8 @@ const App = () => {
         }}
       >
         <Button title="Open In app guide" onPress={() => setVisible(true)} />
-        <InAppGuide visible={visible} setVisible={setVisible} /> // ----->>>>> Use
-        the InAppGuide component and pass in the required props
+        <InAppGuide visible={visible} setVisible={setVisible} /> // Use the InAppGuide component with the required props
+        <UserProfile /> // setUser usage
       </View>
     </AatlasProvider>
   );
