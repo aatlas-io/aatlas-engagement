@@ -1,6 +1,4 @@
-<!-- # @aatlas/engagement
-
-![Build status](https://github.com/aatlas-io/aatlas-engagement/actions/workflows/ci.yml/badge.svg)
+# @aatlas/engagement
 
 Enhance feature awareness and drive success with our advanced nudging platform. Aatlas is a powerful tool designed to boost engagement for your newly launched feature.
 
@@ -16,20 +14,6 @@ or
 yarn add @aatlas/engagement
 ```
 
-## Required dependencies
-
-Bare React Native
-
-- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
-- [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)
-- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)
-
-Expo
-
-- [react-native-reanimated](https://docs.expo.dev/versions/latest/sdk/reanimated/)
-- [react-native-gesture-handler](https://docs.expo.dev/versions/latest/sdk/gesture-handler/)
-- [react-native-safe-area-context](https://docs.expo.dev/versions/latest/sdk/safe-area-context/)
-
 ## Usage
 
 ```js
@@ -41,12 +25,12 @@ const App = () => {
   /**
    * Control when you want to show the inAppGuide
    */
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useState(false);
   return (
     /**
-     * Copy the 'appEnvId' and 'appSecret' from your Aatlas dashboard
+     * Copy the 'appKey' and 'appSecret' from your Aatlas dashboard
      */
-    <AatlasProvider appEnvId={<number>} appSecret="<string>">
+    <AatlasProvider appKey="<string>" appSecret="<string>">
       <View
         style={{
           flex: 1,
@@ -55,42 +39,22 @@ const App = () => {
         }}
       >
         <Button title="Open In app guide" onPress={() => setVisible(true)} />
-        /**
-         *  Use the InAppGuide component and pass in the required props
-         */
-        <InAppGuide visible={visible} setVisible={setVisible} />
+        <InAppGuide visible={visible} setVisible={setVisible} /> // ----->>>>> Use
+        the InAppGuide component and pass in the required props
       </View>
     </AatlasProvider>
   );
-}
+};
 ```
 
-## Try expo example app
+## Required dependencies
 
-```
-cd example
-yarn
-```
-
-```js
-// Update /app/index.tsx and set the appEnvId and appSecret from your Aatlas dashboard
-<AatlasProvider appEnvId={0} appSecret="xxxx">
-```
-
-```
-yarn start
-``` -->
-
-## Coming soon
-
-<!-- ## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
+- [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)
+- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)
+- [@react-native-async-storage/async-storage](https://react-native-async-storage.github.io/async-storage/docs/install/)
+- [react-native-device-info](https://www.npmjs.com/package/react-native-device-info)
 
 ## License
 
 MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob) -->
