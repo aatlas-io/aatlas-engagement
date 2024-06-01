@@ -1,16 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useRef, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  View,
-  Image,
-  StyleSheet,
-  Modal,
-  Text,
-  ScrollView,
-  Dimensions,
-  SafeAreaView,
-} from 'react-native';
+import { View, Image, StyleSheet, Modal, Text, ScrollView, Dimensions, SafeAreaView } from 'react-native';
 import type { StyleProp, TextStyle } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import type { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -35,8 +26,7 @@ const InAppGuide = ({
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { appConfig, updateInAppGuidesSeenStatus, resetInAppGuides } =
-    useAatlasService();
+  const { appConfig, updateInAppGuidesSeenStatus, resetInAppGuides } = useAatlasService();
   const insets = useSafeAreaInsets();
   const carouselRef = useRef<ICarouselInstance | null>(null);
   const width = Dimensions.get('window').width;
@@ -57,9 +47,7 @@ const InAppGuide = ({
         seenIdsRef.current.seen.push(selectedId);
       }
 
-      seenIdsRef.current.notSeen = allIds.filter(
-        (id) => !seenIdsRef.current.seen.includes(id)
-      );
+      seenIdsRef.current.notSeen = allIds.filter((id) => !seenIdsRef.current.seen.includes(id));
     }
   };
 
@@ -79,16 +67,12 @@ const InAppGuide = ({
     ...(description_color ? { color: description_color } : {}),
   };
 
-  const renderItem = ({
-    item: { title, image, description },
-  }: RenderItemType) => (
+  const renderItem = ({ item: { title, image, description } }: RenderItemType) => (
     <View
       style={[
         styles.centeredView,
         {
-          ...(background_color
-            ? { backgroundColor: background_color }
-            : undefined),
+          ...(background_color ? { backgroundColor: background_color } : undefined),
         },
       ]}
     >
@@ -102,10 +86,7 @@ const InAppGuide = ({
         resizeMode="cover"
       />
       <View style={{ height: 12 }} />
-      <ScrollView
-        contentContainerStyle={{ width: width - 40 }}
-        showsHorizontalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={{ width: width - 40 }} showsHorizontalScrollIndicator={false}>
         <Text style={descriptionStyle}>{description}</Text>
       </ScrollView>
       <View style={{ height: 12 }} />
@@ -120,9 +101,7 @@ const InAppGuide = ({
             styles.centeredView,
             {
               paddingBottom: insets?.bottom ? 0 : 12,
-              ...(background_color
-                ? { backgroundColor: background_color }
-                : undefined),
+              ...(background_color ? { backgroundColor: background_color } : undefined),
             },
           ]}
         >
@@ -136,11 +115,7 @@ const InAppGuide = ({
                 setVisible(!visible);
               }}
             >
-              <Image
-                style={{ width: 28, height: 28 }}
-                source={CloseIcon}
-                resizeMode="cover"
-              />
+              <Image style={{ width: 28, height: 28 }} source={CloseIcon} resizeMode="cover" />
             </Button>
           </View>
           <Carousel
@@ -152,12 +127,7 @@ const InAppGuide = ({
             renderItem={renderItem}
           />
           <View
-            style={[
-              styles.paginationContainer,
-              background_color
-                ? { backgroundColor: background_color }
-                : undefined,
-            ]}
+            style={[styles.paginationContainer, background_color ? { backgroundColor: background_color } : undefined]}
           >
             <AnimatedDotsCarousel
               length={in_app_guides.length}
@@ -193,9 +163,7 @@ const InAppGuide = ({
             <Button
               containerStyle={[
                 styles.button,
-                button_background_color
-                  ? { backgroundColor: button_background_color }
-                  : undefined,
+                button_background_color ? { backgroundColor: button_background_color } : undefined,
               ]}
               onPress={() => {
                 if (selectedIndex === in_app_guides.length - 1) {
@@ -209,15 +177,8 @@ const InAppGuide = ({
                 }
               }}
             >
-              <Text
-                style={[
-                  styles.buttonText,
-                  button_text_color ? { color: button_text_color } : undefined,
-                ]}
-              >
-                {selectedIndex === in_app_guides.length - 1
-                  ? 'Done'
-                  : 'Continue'}
+              <Text style={[styles.buttonText, button_text_color ? { color: button_text_color } : undefined]}>
+                {selectedIndex === in_app_guides.length - 1 ? 'Done' : 'Continue'}
               </Text>
             </Button>
           </View>
