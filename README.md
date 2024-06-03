@@ -67,11 +67,8 @@ const App = () => {
 
 ## Required dependencies
 
-- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
-- [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)
-- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)
 - [@react-native-async-storage/async-storage](https://react-native-async-storage.github.io/async-storage/docs/install/)
-- [react-native-device-info](https://www.npmjs.com/package/react-native-device-info)
+- [react-native-version-check](https://github.com/kimxogus/react-native-version-check)
 
 ## License
 
