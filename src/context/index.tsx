@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import type { ReactNode } from 'react';
-import { AppState, Alert } from 'react-native';
-import { getVersion } from 'react-native-device-info';
+import { AppState, Platform } from 'react-native';
+import VersionCheck from 'react-native-version-check';
 import isEqual from 'lodash.isequal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
@@ -48,13 +48,6 @@ export const AatlasProvider = ({
     email?: string;
   }>({ user_id: '', name: '', email: '' });
 
-  const globalDataRef = useRef<GlobalDataType>({
-    appKey: '',
-    appSecret: '',
-    anonymousUserId: '',
-  });
-  globalDataRef.current = { ...globalDataRef.current, appKey, appSecret };
-
   const resetInAppGuides = useCallback(() => {
     setAppConfig({ in_app_guides: [] });
   }, []);
@@ -72,10 +65,6 @@ export const AatlasProvider = ({
       value = uuid.v4() as string;
       await AsyncStorage.setItem(ANONYMOUS_USER_ID_KEY, value);
     }
-    globalDataRef.current = {
-      ...globalDataRef.current,
-      anonymousUserId: value,
-    };
 
     return value;
   }, []);
@@ -103,7 +92,8 @@ export const AatlasProvider = ({
             name,
             email,
             anonymous_user_id,
-            app_version: getVersion(),
+            app_version: VersionCheck.getCurrentVersion(),
+            platform: Platform.OS,
           }),
         });
 
@@ -126,7 +116,7 @@ export const AatlasProvider = ({
 
   const getAppConfig = useCallback(async () => {
     if (!appKey || !appSecret) {
-      Alert.alert('Error', 'Invalid appKey or appSecret', [{ text: 'OK', onPress: () => {} }]);
+      console.error('Invalid appKey or appSecret');
     } else {
       try {
         const anonymous_user_id = await getAnonymousUserId();
@@ -138,8 +128,9 @@ export const AatlasProvider = ({
           },
           body: JSON.stringify({
             app_key: appKey,
-            app_version: getVersion(),
             anonymous_user_id,
+            app_version: VersionCheck.getCurrentVersion(),
+            platform: Platform.OS,
           }),
         });
         const json: AppConfigType = await response.json();
@@ -182,6 +173,7 @@ export const AatlasProvider = ({
             app_key: appKey,
             anonymous_user_id,
             in_app_guide_ids: data,
+            platform: Platform.OS,
           }),
         });
 

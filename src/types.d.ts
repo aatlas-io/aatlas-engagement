@@ -30,13 +30,13 @@ type RenderItemType = {
 };
 
 type GlobalDataType = {
-  appKey: number;
+  appKey: string;
   appSecret: string;
   anonymousUserId: string;
 };
 
 type AppDataType = {
-  appKey: number;
+  appKey: string;
   appSecret: string;
 };
 
