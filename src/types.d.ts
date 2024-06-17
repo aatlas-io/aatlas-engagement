@@ -14,19 +14,17 @@ type InAppGuidesStatus = {
   notSeen: number[];
 };
 
+type FeedbackType = {
+  message: string;
+  type: 'nps' | 'general';
+};
+
 type ConfigType = {
   appConfig: AppConfigType | null;
   setUser: ({ user_id, name, email }: { user_id?: string; name?: string; email?: string }) => void;
-  updateInAppGuidesSeenStatus: (data: InAppGuidesStatus) => Promise<null>;
+  updateInAppGuidesSeenStatus: (data: InAppGuidesStatus) => Promise<void>;
   resetInAppGuides: () => void;
-};
-
-type RenderItemType = {
-  item: {
-    title: string;
-    image: string;
-    description: string;
-  };
+  sendFeedback: (data: FeedbackType) => Promise<void>;
 };
 
 type GlobalDataType = {
