@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { AppState, Platform } from 'react-native';
 import VersionCheck from 'react-native-version-check';
 import isEqual from 'lodash.isequal';
-import { ENGAGEMENT_API, IN_APP_GUIDE_SEEN_API, SEND_FEEDBACK_API, SET_USER_API } from '../constants';
+import { ENGAGEMENT_API, IN_APP_GUIDE_SEEN_API, SEND_FEEDBACK_API, SESSION_API, SET_USER_API } from '../constants';
 import { aatlasFetch } from '../utils';
 
 const AatlasServiceContext = createContext<ConfigType>({
@@ -43,39 +43,31 @@ export const AatlasProvider = ({
 }) => {
   const [appConfig, setAppConfig] = useState<AppConfigType | null>(null);
   const appState = useRef(AppState.currentState);
-  const [userDetails, setUserDetails] = useState<{
-    user_id?: string;
-    name?: string;
-    email?: string;
-  }>({ user_id: '', name: '', email: '' });
 
   const resetInAppGuides = useCallback(() => {
     setAppConfig({ in_app_guides: [] });
   }, []);
 
   const setUser = useCallback(
-    ({ user_id, name, email }: { user_id?: string; name?: string; email?: string }) => {
-      setUserDetails({ user_id, name, email });
-    },
-    [setUserDetails]
-  );
-
-  const updateUser = useCallback(
-    async ({ user_id = '', name = '', email = '' }: { user_id?: string; name?: string; email?: string }) => {
-      await aatlasFetch({
-        appKey,
-        appSecret,
-        url: SET_USER_API,
-        body: {
-          app_key: appKey,
-          user_id,
-          name,
-          email,
-          app_version: VersionCheck.getCurrentVersion(),
-          platform: Platform.OS,
-        },
-        scope: 'updateUser',
-      });
+    async ({ user_id = '', name = '', email = '' }: { user_id: string; name?: string; email?: string }) => {
+      if (!user_id) {
+        console.error('user_id is required');
+      } else {
+        await aatlasFetch({
+          appKey,
+          appSecret,
+          url: SET_USER_API,
+          body: {
+            app_key: appKey,
+            user_id,
+            name,
+            email,
+            app_version: VersionCheck.getCurrentVersion(),
+            platform: Platform.OS,
+          },
+          scope: 'setUser',
+        });
+      }
     },
     [appSecret, appKey]
   );
@@ -98,11 +90,7 @@ export const AatlasProvider = ({
         setAppConfig(data);
       }
     }
-
-    if (userDetails?.user_id || userDetails?.name || userDetails?.email) {
-      updateUser(userDetails);
-    }
-  }, [appConfig, appSecret, appKey, userDetails, updateUser]);
+  }, [appConfig, appSecret, appKey]);
 
   const updateInAppGuidesSeenStatus = useCallback(
     async (data: InAppGuidesStatus) => {
@@ -158,6 +146,22 @@ export const AatlasProvider = ({
       subscription.remove();
     };
   }, [getAppConfig]);
+
+  useEffect(() => {
+    const logSession = async () => {
+      await aatlasFetch({
+        appKey,
+        appSecret,
+        url: SESSION_API,
+        body: {
+          app_key: appKey,
+          platform: Platform.OS,
+        },
+        scope: 'sendFeedback',
+      });
+    };
+    logSession();
+  }, [appKey, appSecret]);
 
   const values = useMemo(
     () => ({
