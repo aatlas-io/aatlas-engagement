@@ -1,4 +1,4 @@
-# @aatlas/engagement
+# @aatlas/engagement-expo
 
 Enhance feature awareness and drive success with our advanced nudging platform. Aatlas is a powerful tool designed to boost engagement for your newly launched feature.
 
@@ -7,13 +7,13 @@ Enhance feature awareness and drive success with our advanced nudging platform. 
 ---
 
 ```sh
-npm install @aatlas/engagement
+npm install @aatlas/engagement-expo
 ```
 
 or
 
 ```sh
-yarn add @aatlas/engagement
+yarn add @aatlas/engagement-expo
 ```
 
 ## Usage
@@ -22,8 +22,10 @@ yarn add @aatlas/engagement
 
 ##### App setup
 
+Wrap your app root with `AatlasProvider`
+
 ```js
-import InAppGuide, { AatlasProvider, useAatlasService } from '@aatlas/engagement';
+import { AatlasProvider } from '@aatlas/engagement-expo';
 
 // ...
 
@@ -41,9 +43,13 @@ const App = () => {
 
 ##### User setup
 
-> We recommend to set up the user with the required <b>`user_id`</b> field to correctly identify their interactions. By default a user is identified using a random uuid and without the <b>`user_id`</b> their info will be removed periodically.
+> We recommend to set up the user with the required <b>`user_id`</b> field to correctly identify them on the dashboard.
 
 ```js
+import { useAatlasService } from '@aatlas/engagement-expo';
+
+// ...
+
 const UserProfile = () => {
   const { setUser } = useAatlasService();
   // ...
@@ -63,6 +69,10 @@ const UserProfile = () => {
 ##### Using In App Guides
 
 ```js
+import { InAppGuide } from '@aatlas/engagement-expo';
+
+// ...
+
 const Home = () => {
   const guidesRef = React.useRef<any>();
 
@@ -88,6 +98,10 @@ const Home = () => {
 ##### Using Feedback
 
 ```js
+import { Feedback } from '@aatlas/engagement-expo';
+
+// ...
+
 const Home = () => {
   const feedbackRef = React.useRef<any>();
 
@@ -106,6 +120,38 @@ const Home = () => {
         buttonTitleStyle={{}} // optional
         buttonContainerStyle={{}} // optional
         onClosePress={() => {}} // optional
+      />
+    </View>
+  );
+};
+```
+
+##### Using NPS Feedback
+
+Setup the NPS segment from your Aatlas dashboard and add the component in the desired screen.
+
+```js
+import { NPSFeedback } from '@aatlas/engagement-expo';
+
+// ....
+
+const Home = () => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <NPSFeedback
+        title="Rate your experience" // optional
+        header="How likely are you to recommend us to a friend?" // optional
+        placeholder="Tell us more about why you chose this score" // optional
+        titleStyle={{}} // optional
+        headerStyle={{}} // optional
+        inputTitle="Feedback" // optional
+        inputStyle={{}} // optional
+        inputTitleStyle={{}} // optional
+        containerStyle={{}} // optional
+        buttonTitleStyle={{}} // optional
+        buttonContainerStyle={{}} // optional
+        onClosePress={() => {}} // optional
+        showDelay={2000} // optional
       />
     </View>
   );
