@@ -1,4 +1,4 @@
-# @aatlas/engagement-expo
+# @aatlas/engagement
 
 Enhance feature awareness and drive success with our advanced nudging platform. Aatlas is a powerful tool designed to boost engagement for your newly launched feature.
 
@@ -7,13 +7,13 @@ Enhance feature awareness and drive success with our advanced nudging platform. 
 ---
 
 ```sh
-npm install @aatlas/engagement-expo
+npm install @aatlas/engagement
 ```
 
 or
 
 ```sh
-yarn add @aatlas/engagement-expo
+yarn add @aatlas/engagement
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ yarn add @aatlas/engagement-expo
 Wrap your app root with `AatlasProvider`
 
 ```js
-import { AatlasProvider } from '@aatlas/engagement-expo';
+import { AatlasProvider } from '@aatlas/engagement';
 
 // ...
 
@@ -43,10 +43,10 @@ const App = () => {
 
 ##### User setup
 
-> We recommend to set up the user with the required <b>`user_id`</b> field to correctly identify them on the dashboard.
+> We recommend to set up the user with the required <b>`user_id`</b> field to identify them on the dashboard.
 
 ```js
-import { useAatlasService } from '@aatlas/engagement-expo';
+import { useAatlasService } from '@aatlas/engagement';
 
 // ...
 
@@ -69,7 +69,7 @@ const UserProfile = () => {
 ##### Using In App Guides
 
 ```js
-import { InAppGuide } from '@aatlas/engagement-expo';
+import { InAppGuide } from '@aatlas/engagement';
 
 // ...
 
@@ -98,7 +98,7 @@ const Home = () => {
 ##### Using Feedback
 
 ```js
-import { Feedback } from '@aatlas/engagement-expo';
+import { Feedback } from '@aatlas/engagement';
 
 // ...
 
@@ -131,7 +131,7 @@ const Home = () => {
 Setup the NPS segment from your Aatlas dashboard and add the component in the desired screen.
 
 ```js
-import { NPSFeedback } from '@aatlas/engagement-expo';
+import { NPSFeedback } from '@aatlas/engagement';
 
 // ....
 
